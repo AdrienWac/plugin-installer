@@ -1,5 +1,5 @@
 {
-    "name": "AdrienWac/plugin-installer",
+    "name": "adrien-wac/plugin-installer",
     "description": "Installateur de paquet personnalisé pour les plugins cakephp 2.",
     "type": "composer-plugin",
     "license": "MIT",
