@@ -87,31 +87,74 @@ class InstallerTest extends TestCase
 
     /**
      * testInstallPath
+     * Test la méthode qui retourne le chemin d'installation du package
      *
      * @dataProvider dataForTestInstallPath
      */
-    public function testInstallPath($type, $path, $name, $version = '1.0.0')
+    public function testInstallPath(array $packageExtra, string $packageName, string $exceptedResult, $version = '1.0.0')
     {
-        $installer = new Installer($this->io, $this->composer);
-        $package = new Package($name, $version, $version);
 
-        $package->setType($type);
+        $installer = new Installer($this->io, $this->composer);
+        $package = new Package($packageName, $version, $version);
+        
+        $package->setExtra($packageExtra);
+        $package->setType('cakephp-plugin');
+
         $result = $installer->getInstallPath($package);
-        var_dump($result);die;
-        $this->assertEquals($path, $result);
+
+        $this->assertEquals($exceptedResult, $result);
+
     }
 
     /**
-     * Undocumented function
+     * Données pour le test de la création du chemin d'installation du package
      *
      * @return void
      */
     public function dataForTestInstallPath()
     {
-        return array(
+        return [
             // array('cakephp-plugin', 'Plugin/Ftp/', 'shama/ftp'),
-            array('cakephp-plugin', 'Plugin/Ftp/', 'webandcow/cakephp-sanitize')
-        );
+            [[], 'webandcow/cakephp-sanitize', 'Plugin/Cakephpsanitize'],
+            [['installer-name' => 'SanitizeBehavior'],'webandcow/cakephp-sanitize', 'Plugin/SanitizeBehavior'],
+            [[],'FriendsOfCake/awesome-cakephp', 'Plugin/Awesomecakephp'],
+            [['installer-name' => 'AwesomeCakephp'],'FriendsOfCake/awesome-cakephp', 'Plugin/AwesomeCakephp'],
+        ];
+    }
+
+    /**
+     * Test la mise en forme d'une chaine de caractère
+     * 
+     * @dataProvider dataForSanitizeString
+     *
+     * @param string $string
+     * @param string $exceptedResult
+     * @return void
+     */
+    public function testSanitizeString(string $string, string $exceptedResult)
+    {
+        $installer = new Installer($this->io, $this->composer);
+        $this->assertEquals($exceptedResult, $installer->sanitizeString($string));
+    }
+
+    /**
+     * Données pour le test de la mise en forme d'une chaine de caractère 
+     *
+     * @return array
+     */
+    public function dataForSanitizeString(): array
+    {
+        return [
+            ['/SanitizeBehavior', 'SanitizeBehavior'],
+            ['webandcow/cakephp-sanitize', 'Cakephpsanitize'],
+            ['Sanitize Behavior', 'SanitizeBehavior'],
+            ['Sanit2131izeBehavior', 'SanitizeBehavior'],
+            ['SanitizeBehavior21212', 'SanitizeBehavior'],
+            ['1213SanitizeBehavior', 'SanitizeBehavior'],
+            ['Sa!??>niti??§§ze Behavior', 'SanitizeBehavior'],
+            ['??§§Sa!??>nitize Behavior', 'SanitizeBehavior'],
+            ['SanitizeBehavior??§§', 'SanitizeBehavior'],
+        ];
     }
 
 }
