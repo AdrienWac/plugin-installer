@@ -21,9 +21,9 @@ class Installer extends LibraryInstaller
     public function getInstallPath(PackageInterface $package)
     {
         $this->package = $package;
-
+        
         if (!$this->isCakePhpPlugin()) {
-            throw new \Exception('Le package doit être de type cakephp-plugin');
+            return parent::getInstallPath($package);
         }
        
         $this->getFinalName();
