@@ -2,8 +2,14 @@
 
 namespace Composer\Installer;
 
-use Composer\Package\PackageInterface;
+use Composer\Composer;
+use Composer\Installer\BinaryInstaller;
 use Composer\Installer\LibraryInstaller;
+use Composer\IO\IOInterface;
+use Composer\Package\PackageInterface;
+use Composer\Repository\InstalledRepositoryInterface;
+use Composer\Util\Filesystem;
+use React\Promise\PromiseInterface;
 
 class Installer extends LibraryInstaller
 {
@@ -11,6 +17,23 @@ class Installer extends LibraryInstaller
     private string $finalName;
 
     private PackageInterface $package;
+
+    public function __construct(
+        IOInterface $io,
+        Composer $composer,
+        $type = 'library',
+        Filesystem $filesystem = null,
+        BinaryInstaller $binaryInstaller = null
+    ) {
+        parent::__construct(
+            $io,
+            $composer,
+            $type,
+            $filesystem,
+            $binaryInstaller
+        );
+    }
+
 
     /**
      * Retourne le chemin d'installation du package
