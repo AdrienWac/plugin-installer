@@ -1,5 +1,5 @@
 # plugin-installer
-Installateur composer personnalisé pour installer des plugins sur des projets CakePHP2.
+Installateur composer personnalisé pour installer des plugins sur des projets CakePHP2 via composer.
 
 # Utilisation
 
