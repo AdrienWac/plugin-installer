@@ -1,7 +1,7 @@
 {
     "name": "adrien-wac/plugin-installer",
-    "description": "Installateur de paquet personnalisé pour les plugins cakephp 2.",
     "type": "composer-plugin",
+    "description": "Installateur de paquet personnalisé pour les plugins cakephp 2.",
     "license": "MIT",
     "authors": [
         {
@@ -9,19 +9,6 @@
             "email": "adrienlambert725@gmail.com"
         }
     ],
-    "autoload": {
-        "psr-4": {
-            "Composer\\Installer\\": "src/Composer/Installer"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Composer\\Installer\\Test\\": "tests/Composer/Installer/Test"
-        }
-    },
-    "extra": {
-        "class": "Composer\\Installer\\Plugin"
-    },
     "require": {
         "php": ">=5.6.0",
         "composer-plugin-api": "^1.0 || ^2.0"
@@ -29,5 +16,20 @@
     "require-dev": {
         "composer/composer": "^2.0",
         "phpunit/phpunit": "^5.7 || ^6.5 || ^8.5 || ^9.3"
+    },
+    "autoload": {
+        "psr-4": {"Composer\\Installer\\": "src/"},
+        "psr-0": {"Composer\\Installer": "src/"}
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Composer\\Installer\\Test\\": "tests/"
+        }
+    },
+    "extra": {
+        "class": "Composer\\Installer\\Plugin",
+        "branch-alias": {
+            "dev-main": "0.x-dev"
+        }
     }
 }
